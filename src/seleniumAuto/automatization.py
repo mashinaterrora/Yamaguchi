@@ -1,26 +1,25 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from online_sim import (
+from src.service.online_sim import (
     buy_number,
     receive_sms,
     set_operation_ok
 )
-from names import user_name, email
+from src.service.names import user_name, email
 import time
 
-options = webdriver.ChromeOptions()
 
-
-s = Service(executable_path='D:\\Projects\\Yamaguchi\\chromedriver\\chromedriver.exe')
-driver = webdriver.Chrome(service=s, options=options)
-
-
-def main():
+def main(url):
     ids = []
 
+    options = webdriver.ChromeOptions()
+
+    s = Service(executable_path='D:\\Projects\\Yamaguchi\\chromedriver\\chromedriver.exe')
+    driver = webdriver.Chrome(service=s, options=options)
+
     try:
-        driver.get(url="https://yamaguchi-massage.ru/pay/DS04012/1")
+        driver.get(url=url)
         time.sleep(1)
 
         phone_input = driver.find_element(By.XPATH, "/html/body/main/div/form/dl/div/input")
@@ -38,7 +37,6 @@ def main():
         time.sleep(2)
         print(code)
         print(ids)
-
 
         code_input = driver.find_element(By.XPATH, f"/html/body/main/div/form/dd/fieldset/dl/div/input[1]")
         code_input.clear()
@@ -58,6 +56,7 @@ def main():
         code_input = driver.find_element(By.XPATH, f"/html/body/main/div/form/dd/fieldset/dl/div/input[4]")
         code_input.clear()
         code_input.send_keys(code[3])
+
         time.sleep(1)
 
         time.sleep(5)
@@ -87,18 +86,11 @@ def main():
 
         time.sleep(10)
 
-        print(set_operation_ok(ids))
-
-        time.sleep(5)
-
-
-
     except Exception as ex:
         print(ex)
     finally:
+        print(set_operation_ok(ids))
         driver.close()
         driver.quit()
 
 
-if __name__ == "__main__":
-    main()

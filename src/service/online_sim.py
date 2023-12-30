@@ -35,9 +35,20 @@ def receive_sms():
             print("Код не пришёл")
 
 
+def check_balance():
+    full_url = f"https://onlinesim.io/api/getBalance.php?apikey={API_KEY}&income=boolean&lang=ru"
+
+    req = requests.get(url=full_url)
+
+    if float(json.loads(req.text)["balance"]) < 0.06:
+        return False
+    else:
+        return True
+
+
 def set_operation_ok(tzid: list):
 
-    full_url = f"https://onlinesim.io/{API_KEY}/setOperationOk.php?tzid={tzid[0]}&lang=ru"
+    full_url = f"https://onlinesim.io/api/setOperationOk.php?apikey={API_KEY}&tzid={tzid[0]}&lang=ru"
 
     req = requests.get(url=full_url)
 

@@ -9,13 +9,15 @@ from src.service.online_sim import (
 from src.service.names import user_name, email
 import time
 
+WEBDRIVER_PATH = ''
+
 
 def main(url):
     ids = []
 
     options = webdriver.ChromeOptions()
 
-    s = Service(executable_path='D:\\Projects\\Yamaguchi\\chromedriver\\chromedriver.exe')
+    s = Service(executable_path=f'{WEBDRIVER_PATH}')
     driver = webdriver.Chrome(service=s, options=options)
 
     try:
